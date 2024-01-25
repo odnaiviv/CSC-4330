@@ -1,0 +1,324 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> stmt
+Rule 1     stmt -> ID ASSIGN expr SEMICOLON
+Rule 2     stmt -> LBRACE stmtlist RBRACE
+Rule 3     stmt -> IF LPAREN expr RPAREN stmt
+Rule 4     stmt -> WHILE LPAREN expr RPAREN stmt
+Rule 5     stmtlist -> stmt
+Rule 6     stmtlist -> stmtlist stmt
+Rule 7     expr -> ID
+Rule 8     expr -> NUM
+Rule 9     expr -> expr OPTR expr
+
+Terminals, with rules where they appear
+
+ASSIGN               : 1
+ID                   : 1 7
+IF                   : 3
+LBRACE               : 2
+LPAREN               : 3 4
+NUM                  : 8
+OPTR                 : 9
+RBRACE               : 2
+RPAREN               : 3 4
+SEMICOLON            : 1
+WHILE                : 4
+error                : 
+
+Nonterminals, with rules where they appear
+
+expr                 : 1 3 4 9 9
+stmt                 : 3 4 5 6 0
+stmtlist             : 2 6
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . stmt
+    (1) stmt -> . ID ASSIGN expr SEMICOLON
+    (2) stmt -> . LBRACE stmtlist RBRACE
+    (3) stmt -> . IF LPAREN expr RPAREN stmt
+    (4) stmt -> . WHILE LPAREN expr RPAREN stmt
+
+    ID              shift and go to state 2
+    LBRACE          shift and go to state 3
+    IF              shift and go to state 4
+    WHILE           shift and go to state 5
+
+    stmt                           shift and go to state 1
+
+state 1
+
+    (0) S' -> stmt .
+
+
+
+state 2
+
+    (1) stmt -> ID . ASSIGN expr SEMICOLON
+
+    ASSIGN          shift and go to state 6
+
+
+state 3
+
+    (2) stmt -> LBRACE . stmtlist RBRACE
+    (5) stmtlist -> . stmt
+    (6) stmtlist -> . stmtlist stmt
+    (1) stmt -> . ID ASSIGN expr SEMICOLON
+    (2) stmt -> . LBRACE stmtlist RBRACE
+    (3) stmt -> . IF LPAREN expr RPAREN stmt
+    (4) stmt -> . WHILE LPAREN expr RPAREN stmt
+
+    ID              shift and go to state 2
+    LBRACE          shift and go to state 3
+    IF              shift and go to state 4
+    WHILE           shift and go to state 5
+
+    stmtlist                       shift and go to state 7
+    stmt                           shift and go to state 8
+
+state 4
+
+    (3) stmt -> IF . LPAREN expr RPAREN stmt
+
+    LPAREN          shift and go to state 9
+
+
+state 5
+
+    (4) stmt -> WHILE . LPAREN expr RPAREN stmt
+
+    LPAREN          shift and go to state 10
+
+
+state 6
+
+    (1) stmt -> ID ASSIGN . expr SEMICOLON
+    (7) expr -> . ID
+    (8) expr -> . NUM
+    (9) expr -> . expr OPTR expr
+
+    ID              shift and go to state 11
+    NUM             shift and go to state 13
+
+    expr                           shift and go to state 12
+
+state 7
+
+    (2) stmt -> LBRACE stmtlist . RBRACE
+    (6) stmtlist -> stmtlist . stmt
+    (1) stmt -> . ID ASSIGN expr SEMICOLON
+    (2) stmt -> . LBRACE stmtlist RBRACE
+    (3) stmt -> . IF LPAREN expr RPAREN stmt
+    (4) stmt -> . WHILE LPAREN expr RPAREN stmt
+
+    RBRACE          shift and go to state 14
+    ID              shift and go to state 2
+    LBRACE          shift and go to state 3
+    IF              shift and go to state 4
+    WHILE           shift and go to state 5
+
+    stmt                           shift and go to state 15
+
+state 8
+
+    (5) stmtlist -> stmt .
+
+    RBRACE          reduce using rule 5 (stmtlist -> stmt .)
+    ID              reduce using rule 5 (stmtlist -> stmt .)
+    LBRACE          reduce using rule 5 (stmtlist -> stmt .)
+    IF              reduce using rule 5 (stmtlist -> stmt .)
+    WHILE           reduce using rule 5 (stmtlist -> stmt .)
+
+
+state 9
+
+    (3) stmt -> IF LPAREN . expr RPAREN stmt
+    (7) expr -> . ID
+    (8) expr -> . NUM
+    (9) expr -> . expr OPTR expr
+
+    ID              shift and go to state 11
+    NUM             shift and go to state 13
+
+    expr                           shift and go to state 16
+
+state 10
+
+    (4) stmt -> WHILE LPAREN . expr RPAREN stmt
+    (7) expr -> . ID
+    (8) expr -> . NUM
+    (9) expr -> . expr OPTR expr
+
+    ID              shift and go to state 11
+    NUM             shift and go to state 13
+
+    expr                           shift and go to state 17
+
+state 11
+
+    (7) expr -> ID .
+
+    SEMICOLON       reduce using rule 7 (expr -> ID .)
+    OPTR            reduce using rule 7 (expr -> ID .)
+    RPAREN          reduce using rule 7 (expr -> ID .)
+
+
+state 12
+
+    (1) stmt -> ID ASSIGN expr . SEMICOLON
+    (9) expr -> expr . OPTR expr
+
+    SEMICOLON       shift and go to state 18
+    OPTR            shift and go to state 19
+
+
+state 13
+
+    (8) expr -> NUM .
+
+    SEMICOLON       reduce using rule 8 (expr -> NUM .)
+    OPTR            reduce using rule 8 (expr -> NUM .)
+    RPAREN          reduce using rule 8 (expr -> NUM .)
+
+
+state 14
+
+    (2) stmt -> LBRACE stmtlist RBRACE .
+
+    $end            reduce using rule 2 (stmt -> LBRACE stmtlist RBRACE .)
+    RBRACE          reduce using rule 2 (stmt -> LBRACE stmtlist RBRACE .)
+    ID              reduce using rule 2 (stmt -> LBRACE stmtlist RBRACE .)
+    LBRACE          reduce using rule 2 (stmt -> LBRACE stmtlist RBRACE .)
+    IF              reduce using rule 2 (stmt -> LBRACE stmtlist RBRACE .)
+    WHILE           reduce using rule 2 (stmt -> LBRACE stmtlist RBRACE .)
+
+
+state 15
+
+    (6) stmtlist -> stmtlist stmt .
+
+    RBRACE          reduce using rule 6 (stmtlist -> stmtlist stmt .)
+    ID              reduce using rule 6 (stmtlist -> stmtlist stmt .)
+    LBRACE          reduce using rule 6 (stmtlist -> stmtlist stmt .)
+    IF              reduce using rule 6 (stmtlist -> stmtlist stmt .)
+    WHILE           reduce using rule 6 (stmtlist -> stmtlist stmt .)
+
+
+state 16
+
+    (3) stmt -> IF LPAREN expr . RPAREN stmt
+    (9) expr -> expr . OPTR expr
+
+    RPAREN          shift and go to state 20
+    OPTR            shift and go to state 19
+
+
+state 17
+
+    (4) stmt -> WHILE LPAREN expr . RPAREN stmt
+    (9) expr -> expr . OPTR expr
+
+    RPAREN          shift and go to state 21
+    OPTR            shift and go to state 19
+
+
+state 18
+
+    (1) stmt -> ID ASSIGN expr SEMICOLON .
+
+    $end            reduce using rule 1 (stmt -> ID ASSIGN expr SEMICOLON .)
+    RBRACE          reduce using rule 1 (stmt -> ID ASSIGN expr SEMICOLON .)
+    ID              reduce using rule 1 (stmt -> ID ASSIGN expr SEMICOLON .)
+    LBRACE          reduce using rule 1 (stmt -> ID ASSIGN expr SEMICOLON .)
+    IF              reduce using rule 1 (stmt -> ID ASSIGN expr SEMICOLON .)
+    WHILE           reduce using rule 1 (stmt -> ID ASSIGN expr SEMICOLON .)
+
+
+state 19
+
+    (9) expr -> expr OPTR . expr
+    (7) expr -> . ID
+    (8) expr -> . NUM
+    (9) expr -> . expr OPTR expr
+
+    ID              shift and go to state 11
+    NUM             shift and go to state 13
+
+    expr                           shift and go to state 22
+
+state 20
+
+    (3) stmt -> IF LPAREN expr RPAREN . stmt
+    (1) stmt -> . ID ASSIGN expr SEMICOLON
+    (2) stmt -> . LBRACE stmtlist RBRACE
+    (3) stmt -> . IF LPAREN expr RPAREN stmt
+    (4) stmt -> . WHILE LPAREN expr RPAREN stmt
+
+    ID              shift and go to state 2
+    LBRACE          shift and go to state 3
+    IF              shift and go to state 4
+    WHILE           shift and go to state 5
+
+    stmt                           shift and go to state 23
+
+state 21
+
+    (4) stmt -> WHILE LPAREN expr RPAREN . stmt
+    (1) stmt -> . ID ASSIGN expr SEMICOLON
+    (2) stmt -> . LBRACE stmtlist RBRACE
+    (3) stmt -> . IF LPAREN expr RPAREN stmt
+    (4) stmt -> . WHILE LPAREN expr RPAREN stmt
+
+    ID              shift and go to state 2
+    LBRACE          shift and go to state 3
+    IF              shift and go to state 4
+    WHILE           shift and go to state 5
+
+    stmt                           shift and go to state 24
+
+state 22
+
+    (9) expr -> expr OPTR expr .
+    (9) expr -> expr . OPTR expr
+
+  ! shift/reduce conflict for OPTR resolved as shift
+    SEMICOLON       reduce using rule 9 (expr -> expr OPTR expr .)
+    RPAREN          reduce using rule 9 (expr -> expr OPTR expr .)
+    OPTR            shift and go to state 19
+
+  ! OPTR            [ reduce using rule 9 (expr -> expr OPTR expr .) ]
+
+
+state 23
+
+    (3) stmt -> IF LPAREN expr RPAREN stmt .
+
+    $end            reduce using rule 3 (stmt -> IF LPAREN expr RPAREN stmt .)
+    RBRACE          reduce using rule 3 (stmt -> IF LPAREN expr RPAREN stmt .)
+    ID              reduce using rule 3 (stmt -> IF LPAREN expr RPAREN stmt .)
+    LBRACE          reduce using rule 3 (stmt -> IF LPAREN expr RPAREN stmt .)
+    IF              reduce using rule 3 (stmt -> IF LPAREN expr RPAREN stmt .)
+    WHILE           reduce using rule 3 (stmt -> IF LPAREN expr RPAREN stmt .)
+
+
+state 24
+
+    (4) stmt -> WHILE LPAREN expr RPAREN stmt .
+
+    $end            reduce using rule 4 (stmt -> WHILE LPAREN expr RPAREN stmt .)
+    RBRACE          reduce using rule 4 (stmt -> WHILE LPAREN expr RPAREN stmt .)
+    ID              reduce using rule 4 (stmt -> WHILE LPAREN expr RPAREN stmt .)
+    LBRACE          reduce using rule 4 (stmt -> WHILE LPAREN expr RPAREN stmt .)
+    IF              reduce using rule 4 (stmt -> WHILE LPAREN expr RPAREN stmt .)
+    WHILE           reduce using rule 4 (stmt -> WHILE LPAREN expr RPAREN stmt .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for OPTR in state 22 resolved as shift
